@@ -49,7 +49,7 @@ Cũng trong Virtual Network Editor ta chọn như sau:
 <img src=http://i.imgur.com/c5H2lOL.png>
 
 - Bước 1: chọn Add Network
-- Bước 2: chọn card cần add thêm (ở đây là VMnet1)
+- Bước 2: chọn card cần add thêm (ở đây là VMnet1) 
 - Bước 3: ấn OK
 
 Lúc này trên cửa sổ Virtual Network Editor sẽ xuất hiện thêm card VMnet1 và được gắn tự động một dải IP, như hình dưới đây:
@@ -79,6 +79,26 @@ Các card mạng này có thể cấp DHCP cho các máy ảo sử dụng nó.
 để làm việc này ta ấn vào DHCP Settings, sau đó chọn dải IP dùng để cấp DHCP
 
 <img src=http://i.imgur.com/RbgHKPE.png>
+
+### 2.4. Cách thêm một card mạng vào máy ảo
+
+Ví dụ ở đây tôi có một máy ảo Ubuntu Server gắn sẵn một card bridge khi tạo máy ảo.
+
+Show IP trên máy ảo:
+
+<img src=http://i.imgur.com/aTMWiUE.png>
+
+Thêm card mạng thứ 2 vào máy ảo bằng cách vào Edit Virtual Machine Settings, chọn Add => Network và làm theo hình dưới:
+
+<img src=http://i.imgur.com/Tx3Cfd2.png>
+
+Xin cấp IP cho card mạng mới trên máy ảo bằng lệnh ***dhclient eth1***
+
+IP của máy ảo sau khi thực hiện xong (đã có thêm card eth1):
+
+<img src=http://i.imgur.com/qfLEEfc.png>
+
+Đối với trường hợp muốn thay đổi từ card bridge (hoặc nat hoặc vmnet) sang card khác thì chỉ cần chọn vào card cần đổi và làm như bước 3 bên trên (không add thêm card mới)
 
 ## 3. Kinh nghiệm bản thân
 
@@ -110,7 +130,7 @@ Như ví dụ tôi đã trình bày ở phần 3.1, việc lập một topo lab 
 
 Trong topo cần chỉ rõ card vmnet nào nối với máy ảo nào, các IP của các interface máy ảo.
 
-Chú ý: các máy ảo sử dụng chung một vmnet thì cần cùng dải IP với vmnet đó. Ví dụ hai máy ảo của tôi là Win XP và CentOS cùng sử dụng vmnet1 thì 2 máy ảo này phải có IP cùng dải 10.10.10.0. Nếu không đúng như thế thì mạng sẽ không thông.
+##### *Chú ý*: các máy ảo sử dụng chung một vmnet thì cần cùng dải IP với vmnet đó. Ví dụ hai máy ảo của tôi là Win XP và CentOS cùng sử dụng vmnet1 thì 2 máy ảo này phải có IP cùng dải 10.10.10.0. Nếu không đúng như thế thì mạng sẽ không thông.
 
 Ví dụ mô hình Lab OpenStack All in one:
 
