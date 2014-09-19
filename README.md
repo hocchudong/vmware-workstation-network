@@ -1,11 +1,15 @@
 Network in VMware Workstation 
 ======
 
-VMware Workstation là một phần mềm ảo hóa dùng cho desktop mạnh và rất phổ biến. Ta có thể download và cài đặt một cách rất dễ dàng. [Link download] (https://my.vmware.com/web/vmware/info/slug/desktop_end_user_computing/vmware_workstation/10_0?rct=j&q=&esrc=s&source=web&cd=1&sqi=2&ved=0CBsQFjAA&url=http://www.vmware.com/go/downloadworkstation&ei=ZCscVKLEO5S68gXy2oHAAg&usg=AFQjCNEVKbKEcEsfY7NjAaBQZbrtZtXttg&sig2=UxGNBi9DyNElS6RlUrRrTw&bvm=bv.75774317,d.dGc)
+VMware Workstation là một phần mềm ảo hóa dùng cho desktop mạnh và rất phổ biến. 
+
+Ta có thể download và cài đặt một cách rất dễ dàng. [Link download] (https://my.vmware.com/web/vmware/info/slug/desktop_end_user_computing/vmware_workstation/10_0?rct=j&q=&esrc=s&source=web&cd=1&sqi=2&ved=0CBsQFjAA&url=http://www.vmware.com/go/downloadworkstation&ei=ZCscVKLEO5S68gXy2oHAAg&usg=AFQjCNEVKbKEcEsfY7NjAaBQZbrtZtXttg&sig2=UxGNBi9DyNElS6RlUrRrTw&bvm=bv.75774317,d.dGc)
+
 Tính năng của nó thì không cần giới thiệu nhiều, chắc hẳn ai trong chúng ta cũng đều biết cách tạo một máy ảo trong VMware. Tuy nhiên trong quá trình lab nhiều bài lab với VMware Workstation đôi khi tôi gặp trường hợp mạng giữa các máy ảo không thông, địa chỉ IP của máy ảo tự nhiên bị thay đổi,..vv.
+
 Trong bài viết này tôi sẽ trình bày cho các bạn một số kinh nghiệm về network trong VMware tôi rút ra được trong thời gian lab với nó. Hi vọng nó sẽ giúp ích cho các bạn.
 
-# Chú ý;
+# Chú ý:
 - Phiên bản VMware tôi sử dụng là VMware Workstation 10
 - Host cài đặt VMware Workstation: Windows 7 Pro 64bit
 - Quy ước: các card mạng ảo trong VMware sẽ được gọi là vmnetx (với x là số thứ tự của card mạng)
@@ -15,11 +19,15 @@ Trong bài viết này tôi sẽ trình bày cho các bạn một số kinh nghi
 Khi mới cài đặt VMware Workstation, mặc định phần mềm sẽ cài cho chúng ta 2 card mạng: 
 
 - Một card bridge, card này sử dụng chính card mạng thật của chúng ta để kết nối ra ngoài Internet (card ethernet hoặc wireless). Do đó khi sử dụng card mạng này IP của máy ảo sẽ cùng với dải IP của máy thật.
+
 Ưu điểm: đơn giản, ra được internet và cùng dải máy thật nên cấu hình gì cũng dễ dàng.
+
 Nhược điểm: tôi đã gặp nhiều trường hợp dùng card bridge cấu hình bình thường và đến khi nơi nào không có mạng (lên lớp chẳng hạn) thì hỏi " hôm qua làm bình thường, sao nay lại không kết nối được?"
+
 => mất mạng là mất hết!!!!
 
 - Một card Nat, card này sẽ Nat địa chỉ IP của máy thật ra một địa chỉ khác cho máy ảo sử dụng. Card này cũng có thể kết nối ra bên ngoài Internet.
+
 Cá nhân tôi ít khi dùng card này.
 
 Để xem các card mạng đã có trong VMware Workstation ta chỉ cần bật VMware lên, chọn Edit => Virtual Network Editor 
@@ -57,12 +65,15 @@ Trong Virtual Network Editor chọn một vmnet và ấn Remove Network (button 
 ### 2.1. Sửa dải IP của một vmnet
 
 Có thể thấy các dải IP mà VMware tự sinh ra và gắn cho các card mạng rất khó nhớ. Ta có thể thay đổi dải IP này bằng cách ấn vào vmnet muốn đổi địa chỉ.
+
 Trong dòng Subnet IP chọn dải IP và subnet muốn thay đổi.
+
 Click Apply và OK
 
 ### 2.3. Cấu hình DHCP
 
 Các card mạng này có thể cấp DHCP cho các máy ảo sử dụng nó.
+
 để làm việc này ta ấn vào DHCP Settings, sau đó chọn dải IP dùng để cấp DHCP
 
 <img src=http://i.imgur.com/RbgHKPE.png>
@@ -80,6 +91,7 @@ Các card mạng này có thể cấp DHCP cho các máy ảo sử dụng nó.
 ## 4. Lời cảm ơn
 
 Cảm ơn các bạn đã đọc hết bài viết này. Tôi hoan nghênh mọi ý kiến đóng, góp xin hãy post lên [blog của tôi] (http://ducnc.blogspot.com/) hoặc có thể commit lên github này.
+
 Liên hệ:
 - Skype: khong_giong_ai
 - Facebook: https://www.facebook.com/nguyencongduc
