@@ -62,11 +62,13 @@ Làm tương tự để add thêm các vmnet tiếp theo.
 
 Trong Virtual Network Editor chọn một vmnet và ấn Remove Network (button cạnh Add Network)
 
-### 2.1. Sửa dải IP của một vmnet
+### 2.2. Sửa dải IP của một vmnet
 
 Có thể thấy các dải IP mà VMware tự sinh ra và gắn cho các card mạng rất khó nhớ. Ta có thể thay đổi dải IP này bằng cách ấn vào vmnet muốn đổi địa chỉ.
 
 Trong dòng Subnet IP chọn dải IP và subnet muốn thay đổi.
+
+<img src=http://i.imgur.com/8a9PjoC.png>
 
 Click Apply và OK
 
@@ -82,11 +84,78 @@ Các card mạng này có thể cấp DHCP cho các máy ảo sử dụng nó.
 
 ### 3.1. Đặt thứ tự và cấu hình trước địa chỉ IP các vmnet trước khi lab
 
+Trước đây khi làm một bài lab, tôi thường lao thẳng vào cài máy ảo luôn, sau đó mới xem địa chỉ IP cửa mỗi vmnet rồi đặt IP tĩnh hoặc xin cấp IP bằng cho máy ảo.
+
+Nhưng với một bài lab lớn, sử dụng khoảng 3,4 máy ảo (ví dụ như bài lab firewall, định tuyến, cloud coputing,...) thì việc làm như trên là một sai lầm.
+
+Các địa chỉ IP của tôi rối loạn hết lên, topo lằng nhằng, không thể thông nổi mạng chứ đừng nói đến chuyện cấu hình các thứ khác.
+
+Sau một thời gian tôi đã tự quy hoạch lại các vmnet mình sử dụng, như add thêm các vmnet, đặt lại dải IP cho các vmnet cho dễ nhớ (vmnet1 dải 10.10.10.0/24, vmnet2 dải 10.10.20.0/24,...)
+
+Việc làm này chỉ mất công có một lần, từ các lần sau khi tạo máy ảo bằng VMware tôi chỉ cần add các vmnet mong muốn theo đúng topo là xong
+
+Việc cấu hình và sửa lỗi cũng trở nên dễ dàng hơn do tôi đã thuộc luôn các địa chỉ IP
+
+Các bạn có thể tham khảo cấu hình các vmnet của tôi như hình dưới đây:
+
+<img src=http://i.imgur.com/sfJvoFk.png>
+
+Các card vmnet1, vmnet2, vmnet3 là các card tôi thêm vào.
+
+Các card vmnet0, vmnet8 là các card mặc định đã trình bày ở trên.
+
 ### 3.2. Xây dựng mô hình lab hoàn chỉnh trên giấy rồi mới thực hiện trên VMware
+
+Như ví dụ tôi đã trình bày ở phần 3.1, việc lập một topo lab là một việc cực quan trọng.
+
+Trong topo cần chỉ rõ card vmnet nào nối với máy ảo nào, các IP của các interface máy ảo.
+
+Chú ý: các máy ảo sử dụng chung một vmnet thì cần cùng dải IP với vmnet đó. Ví dụ hai máy ảo của tôi là Win XP và CentOS cùng sử dụng vmnet1 thì 2 máy ảo này phải có IP cùng dải 10.10.10.0. Nếu không đúng như thế thì mạng sẽ không thông.
+
+Ví dụ mô hình Lab OpenStack All in one:
+
+<img src=http://i.imgur.com/YcxaRhP.png>
 
 ### 3.3. Cách lab kết hợp giữa GNS3 và VMware Workstation
 
+GNS3 thì chắc hẳn ai cũng biết. Một trong những cái hay của GNS3 mà tôi thấy đó là nó có thể kết nối với các card mạng có trong máy (vmnet, ethernet, wireless)
+
+Thông qua các card mạng này ta có thể kết nối trức tiếp các máy ảo trong VMware Workstation hoặc chính máy thật với các thiết bị mạng (Router, SW,...) trong GNS3
+
+Trong mục này tôi sẽ lấy một ví dụ sử dụng GNS3 giả lập một Switch và kết Switch này với một máy ảo XP chạy trên VMware Workstation.
+
+Máy ảo XP sẽ kết nối tới Switch bằng card mạng vmnet1
+
+Trên GNS3 ta kéo vào topo một PC và một Switch
+
+<img src=http://i.imgur.com/v3X5SJA.png>
+
+Click vào biểu tượng kết nối (hình RJ45 bên góc trái) và ấn vào PC. Sau đó chọn đến card VMnet1
+
+<img src=http://i.imgur.com/5gIlKrn.png>
+
+Đầu dây còn lại nối vào cổng bất kỳ trên Switch.
+
+<img src=http://i.imgur.com/YxeqcIN.png>
+
+Trên VMware Workstation chọn máy ảo XP => Edit Virtual Machine Settings và chọn card mạng là vmnet1 như hình sau:
+
+<img src=http://i.imgur.com/gShCPQt.png>
+
+Sau đó bật máy ảo. Lúc này máy ảo XP đã kết nối đến Switch.
+
+##### Lưu ý:
+
+- Nhiều trường hợp cần chạy GNS3 với quyền Admin thì nó mới nhận được các card vmnet
+- Đây chỉ là một ví dụ đơn giản, với các bài lab kết hợp phức tạp hơn cần phải xây dựng mô hình trước.
+
 ### 3.4. Cách thêm nhiều card mạng cho máy ảo 
+
+Trong nhiều trường hợp một máy ảo cần phải add nhiều card mạng vmnet.
+
+Nếu các card vmnet này được add cùng một lúc khi khởi tạo máy ảo thì sau này khi đặt IP cho các interface của máy ảo có thể xảy ra hiện tượng ** đảo IP hai interface** rất khó chịu và khó khăn trong việc sửa lỗi.
+
+#### *GIẢI PHÁP*: add từng card mạng cho máy ảo, ví dụ add xong card vmnet1 ta phải click "Finish" rồi "OK" để thoát hẳn ra ngoài. Sau đó "Edit Virtual Machine Settings" rồi add thêm card vmnet2 => Finish => OK. Lặp lại như vậy để add các card mạng tiếp theo.
 
 ## 4. Lời cảm ơn
 
