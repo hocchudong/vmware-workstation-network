@@ -177,6 +177,36 @@ Nếu các card vmnet này được add cùng một lúc khi khởi tạo máy �
 
 #### *GIẢI PHÁP*: add từng card mạng cho máy ảo, ví dụ add xong card vmnet1 ta phải click "Finish" rồi "OK" để thoát hẳn ra ngoài. Sau đó "Edit Virtual Machine Settings" rồi add thêm card vmnet2 => Finish => OK. Lặp lại như vậy để add các card mạng tiếp theo.
 
+### 3.5. Cách thay đổi địa chỉ Gateway cho card mạng NAT
+
+Giả sử ta cần làm một bài lab mà sử dụng đến card bridge ở các môi trường khác nhau (ở nhà, cơ quan) có các dải IP dùng cho card bridge khác nhau mà máy ảo thì không thể thay đổi địa chỉ IP (ví dụ mạng ở nhà sử dụng dải 192.168.1.0/24, máy ảo có IP 192.168.1.10, lên công ty thì dải mạng là 10.10.10.0/24)
+
+=> làm thế nào để lab được tại cơ quan?
+
+Có hai cách: 
+
+- Dùng card host only thay cho card bridge, cách này cần phải đặt lại địa chỉ IP cho card giống với IP của mạng ở nhà. để đặt lại ip xem mục 2.2
+
+- Dùng card NAT, cách này cũng cần chỉnh dải IP như cách trên.
+
+Lưu ý: 
+
+- Cách thứ 1 không kết nối ra được ngoài Internet
+
+- Cách thứ 2 cần cấu hình lại gateway của máy ảo do mặc định card NAT để gateway là .2, do đó ta cần cấu hình lại gateway cho giống với mạng bridge thật (giả sử gateway là .1). Cách làm như sau:
+
+Vào Virtual Network Editor chọn card NAT và sửa dải IP như mục 2.2
+
+Bỏ chọn connect a host virtual adapter to this network
+
+<img src=http://i.imgur.com/7sPoBlJ.png>
+
+Ấn vào mục NAT Settings đặt lại gateway cho giống với gateway của mạng ở nhà (.1)
+
+<img src=http://i.imgur.com/dTIUQr4.png>
+
+Apply => Ok
+
 ## 4. Lời cảm ơn
 
 Cảm ơn các bạn đã đọc hết bài viết này. Tôi hoan nghênh mọi ý kiến đóng, góp xin hãy post lên [blog của tôi] (http://ducnc.blogspot.com/) hoặc có thể commit lên github này.
@@ -184,5 +214,3 @@ Cảm ơn các bạn đã đọc hết bài viết này. Tôi hoan nghênh mọi
 Liên hệ:
 - Skype: khong_giong_ai
 - Facebook: https://www.facebook.com/nguyencongduc
-
-
