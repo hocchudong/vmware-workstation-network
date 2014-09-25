@@ -1,5 +1,22 @@
 Network in VMware Workstation 
 ======
+- [Mục lục ](#user-content-network-in-vmware-workstation-)
+	- [1. Network mặc định khi mới cài đặt VMware](#user-content-1-network-m%E1%BA%B7c-%C4%91%E1%BB%8Bnh-khi-m%E1%BB%9Bi-c%C3%A0i-%C4%91%E1%BA%B7t-vmware)
+	- [2. Các thao tác với một card mạng ảo trong VMware Workstation](#user-content-2-c%C3%A1c-thao-t%C3%A1c-v%E1%BB%9Bi-m%E1%BB%99t-card-m%E1%BA%A1ng-%E1%BA%A3o-trong-vmware-workstation)
+		- [2.1. Thêm, xóa một vmnet](#user-content-21-th%C3%AAm-x%C3%B3a-m%E1%BB%99t-vmnet)
+				- [Thêm một vmnet](#user-content-th%C3%AAm-m%E1%BB%99t-vmnet)
+				- [Xóa một vmnet](#user-content-x%C3%B3a-m%E1%BB%99t-vmnet)
+		- [2.2. Sửa dải IP của một vmnet](#user-content-22-s%E1%BB%ADa-d%E1%BA%A3i-ip-c%E1%BB%A7a-m%E1%BB%99t-vmnet)
+		- [2.3. Cấu hình DHCP](#user-content-23-c%E1%BA%A5u-h%C3%ACnh-dhcp)
+		- [2.4. Cách thêm một card mạng vào máy ảo](#user-content-24-c%C3%A1ch-th%C3%AAm-m%E1%BB%99t-card-m%E1%BA%A1ng-v%C3%A0o-m%C3%A1y-%E1%BA%A3o)
+	- [3. Kinh nghiệm bản thân](#user-content-3-kinh-nghi%E1%BB%87m-b%E1%BA%A3n-th%C3%A2n)
+		- [3.1. Đặt thứ tự và cấu hình trước địa chỉ IP các vmnet trước khi lab](#user-content-31-%C4%90%E1%BA%B7t-th%E1%BB%A9-t%E1%BB%B1-v%C3%A0-c%E1%BA%A5u-h%C3%ACnh-tr%C6%B0%E1%BB%9Bc-%C4%91%E1%BB%8Ba-ch%E1%BB%89-ip-c%C3%A1c-vmnet-tr%C6%B0%E1%BB%9Bc-khi-lab)
+		- [3.2. Xây dựng mô hình lab hoàn chỉnh trên giấy rồi mới thực hiện trên VMware](#user-content-32-x%C3%A2y-d%E1%BB%B1ng-m%C3%B4-h%C3%ACnh-lab-ho%C3%A0n-ch%E1%BB%89nh-tr%C3%AAn-gi%E1%BA%A5y-r%E1%BB%93i-m%E1%BB%9Bi-th%E1%BB%B1c-hi%E1%BB%87n-tr%C3%AAn-vmware)
+		- [3.3. Cách lab kết hợp giữa GNS3 và VMware Workstation](#user-content-33-c%C3%A1ch-lab-k%E1%BA%BFt-h%E1%BB%A3p-gi%E1%BB%AFa-gns3-v%C3%A0-vmware-workstation)
+				- [Lưu ý:](#user-content-l%C6%B0u-%C3%BD)
+		- [3.4. Cách thêm nhiều card mạng cho máy ảo](#user-content-34-c%C3%A1ch-th%C3%AAm-nhi%E1%BB%81u-card-m%E1%BA%A1ng-cho-m%C3%A1y-%E1%BA%A3o)
+		- [3.5. Cách thay đổi địa chỉ Gateway cho card mạng NAT](#user-content-35-c%C3%A1ch-thay-%C4%91%E1%BB%95i-%C4%91%E1%BB%8Ba-ch%E1%BB%89-gateway-cho-card-m%E1%BA%A1ng-nat)
+	- [4. Lời cảm ơn](#user-content-4-l%E1%BB%9Di-c%E1%BA%A3m-%C6%A1n)
 
 VMware Workstation là một phần mềm ảo hóa dùng cho desktop mạnh và rất phổ biến. 
 
