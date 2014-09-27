@@ -13,7 +13,6 @@ Network in VMware Workstation
 		- [3.1. Đặt thứ tự và cấu hình trước địa chỉ IP các vmnet trước khi lab](#user-content-31-%C4%90%E1%BA%B7t-th%E1%BB%A9-t%E1%BB%B1-v%C3%A0-c%E1%BA%A5u-h%C3%ACnh-tr%C6%B0%E1%BB%9Bc-%C4%91%E1%BB%8Ba-ch%E1%BB%89-ip-c%C3%A1c-vmnet-tr%C6%B0%E1%BB%9Bc-khi-lab)
 		- [3.2. Xây dựng mô hình lab hoàn chỉnh trên giấy rồi mới thực hiện trên VMware](#user-content-32-x%C3%A2y-d%E1%BB%B1ng-m%C3%B4-h%C3%ACnh-lab-ho%C3%A0n-ch%E1%BB%89nh-tr%C3%AAn-gi%E1%BA%A5y-r%E1%BB%93i-m%E1%BB%9Bi-th%E1%BB%B1c-hi%E1%BB%87n-tr%C3%AAn-vmware)
 		- [3.3. Cách lab kết hợp giữa GNS3 và VMware Workstation](#user-content-33-c%C3%A1ch-lab-k%E1%BA%BFt-h%E1%BB%A3p-gi%E1%BB%AFa-gns3-v%C3%A0-vmware-workstation)
-				- [Lưu ý:](#user-content-l%C6%B0u-%C3%BD)
 		- [3.4. Cách thêm nhiều card mạng cho máy ảo](#user-content-34-c%C3%A1ch-th%C3%AAm-nhi%E1%BB%81u-card-m%E1%BA%A1ng-cho-m%C3%A1y-%E1%BA%A3o)
 		- [3.5. Cách thay đổi địa chỉ Gateway cho card mạng NAT](#user-content-35-c%C3%A1ch-thay-%C4%91%E1%BB%95i-%C4%91%E1%BB%8Ba-ch%E1%BB%89-gateway-cho-card-m%E1%BA%A1ng-nat)
 	- [4. Lời cảm ơn](#user-content-4-l%E1%BB%9Di-c%E1%BA%A3m-%C6%A1n)
@@ -39,7 +38,7 @@ Khi mới cài đặt VMware Workstation, mặc định phần mềm sẽ cài c
 
 Ưu điểm: đơn giản, ra được internet và cùng dải máy thật nên cấu hình gì cũng dễ dàng.
 
-Nhược điểm: tôi đã gặp nhiều trường hợp dùng card bridge cấu hình bình thường và đến khi nơi nào không có mạng (lên lớp chẳng hạn) thì hỏi " hôm qua làm bình thường, sao nay lại không kết nối được?"
+Nhược điểm: tôi đã gặp nhiều trường hợp dùng card bridge cấu hình bình thường và đến khi nơi nào không có mạng (lên lớp chẳng hạn) thì hỏi "hôm qua làm bình thường, sao nay lại không kết nối được?"
 
 => mất mạng là mất hết!!!!
 
@@ -159,31 +158,47 @@ GNS3 thì chắc hẳn ai cũng biết. Một trong những cái hay của GNS3 
 
 Thông qua các card mạng này ta có thể kết nối trức tiếp các máy ảo trong VMware Workstation hoặc chính máy thật với các thiết bị mạng (Router, SW,...) trong GNS3
 
-Trong mục này tôi sẽ lấy một ví dụ sử dụng GNS3 giả lập một Switch và kết Switch này với một máy ảo XP chạy trên VMware Workstation.
+Trong mục này tôi sẽ lấy một ví dụ sử dụng một Router trong GNS3 và kết nối tới một máy PC trong VMware Workstation 10.
 
-Máy ảo XP sẽ kết nối tới Switch bằng card mạng vmnet1
+Máy ảo XP sẽ kết nối tới Router bằng card mạng vmnet1.
 
-Trên GNS3 ta kéo vào topo một PC và một Switch
+Trên GNS3 ta kéo vào topo một PC và một Router (với giả thiết Router GNS3 đã có IOS).
 
-<img src=http://i.imgur.com/v3X5SJA.png>
+<img src=http://i.imgur.com/zAvhQSd.png>
 
 Click vào biểu tượng kết nối (hình RJ45 bên góc trái) và ấn vào PC. Sau đó chọn đến card VMnet1
 
-<img src=http://i.imgur.com/5gIlKrn.png>
+<img src=http://i.imgur.com/ZsGJMCo.png>
 
-Đầu dây còn lại nối vào cổng bất kỳ trên Switch.
+Đầu dây còn lại nối vào cổng f0/0 của Router.
 
-<img src=http://i.imgur.com/YxeqcIN.png>
+<img src=http://i.imgur.com/9Hr7QVD.png>
 
 Trên VMware Workstation chọn máy ảo XP => Edit Virtual Machine Settings và chọn card mạng là vmnet1 như hình sau:
 
 <img src=http://i.imgur.com/gShCPQt.png>
 
-Sau đó bật máy ảo. Lúc này máy ảo XP đã kết nối đến Switch.
+Sau đó bật máy ảo và kiểm tra IP thấy máy ảo có IP thuộc dải IP của vmnet1.
+
+<img src=http://i.imgur.com/aToFbd1.png>
+
+Trên GNS3 ta click vào Router, một cửa sổ console hiện lên và thực hiện các lệnh sau để cấu hình IP cho card mạng f0/0
+
+    configure terminal
+    interface f0/0
+    ip address 10.10.10.140 255.255.255.0
+    no shutdown
+
+Trên máy ảo ta ping đến địa chỉ 10.10.10.140 của Router thì thấy thành công.
+
+<img src=http://i.imgur.com/fyw7avZ.png>
+
+Quá trình kết nối PC và Router thành công.
 
 ##### Lưu ý:
 
-- Nhiều trường hợp cần chạy GNS3 với quyền Admin thì nó mới nhận được các card vmnet
+- Nhiều trường hợp cần chạy GNS3 với quyền Admin thì nó mới nhận được các card vmnet.
+- Với GNS3 muốn sử dụng các router thì các router này cần IOS.
 - Đây chỉ là một ví dụ đơn giản, với các bài lab kết hợp phức tạp hơn cần phải xây dựng mô hình trước.
 
 ### 3.4. Cách thêm nhiều card mạng cho máy ảo 
