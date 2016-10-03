@@ -241,8 +241,4 @@ Apply => Ok
 
 ## 4. Lời cảm ơn
 
-Cảm ơn các bạn đã đọc hết bài viết này. Tôi hoan nghênh mọi ý kiến đóng, góp xin hãy post lên [blog của tôi] (http://ducnc.blogspot.com/) hoặc có thể commit lên github này.
-
-Liên hệ:
-- Skype: khong_giong_ai
-- Facebook: https://www.facebook.com/nguyencongduc
+Cảm ơn các bạn đã đọc bài
